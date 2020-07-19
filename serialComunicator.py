@@ -5,24 +5,21 @@ import time
 
 device = serial.Serial('COM4',115200, timeout=1)
 print(device.name)
-time.sleep(5)
-
-rawString = device.readline()
-print(rawString)
-
-device.write(b'$$')
-out = ''
-        # let's wait one second before reading output (let's give device time to answer)
-time.sleep(1)
-while device.inWaiting() > 0:
-    out +=  ''device.read(1)
-
-if out != '':
-    print(">>" + out)
-
 time.sleep(2)
-rawString = device.readline()
-print(rawString)
+
+device.write(b"\r\n\r\n")
+
+device.write(b"$$\n")
+data = device.readline()[:-2]
+time.sleep(2)
+print(data)
+
+# while True:
+# 	data = device.readline()[:-2] #the last bit gets rid of the new-line chars
+# 	if data:
+# 		print(data)
+
+
 
 # sio = io.TextIOWrapper(io.BufferedRWPair(device, device))
 # sio.write(unicode("$$\n"))
