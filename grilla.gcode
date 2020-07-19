@@ -1,5 +1,5 @@
 G21 ; Set units to mm
-G91 ; Relative  positioning
+G91 ; Relative positioning
 G1 X1 Y0 F50
 G4 P1
 G1 X1 Y0 F50

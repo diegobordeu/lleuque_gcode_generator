@@ -17,7 +17,7 @@ def buildFileY():
 
 def buildFileX():
     for x in range(0, xAxis-1):
-        f.write("G1 X{} Y{} F{}\n".format(-1, 0,speed))
+        f.write("G1 X{} Y{} F{}\n".format(1, 0,speed))
         f.write("G4 P{}\n".format(pause))
 
 
@@ -25,8 +25,11 @@ initFile()
 # buildFileY()
 buildFileX()
 
+f.close()
+
 # f.write("G1 X{} Y{} F{}\n".format(0, -1 * (yAxis - 1),speed))
 # f.write("G1 X{} Y{} F{}\n".format(-1 * (xAxis - 1), 0,speed))
 #open and read the file after the appending:
 f = open("grilla.gcode", "r")
 print(f.read())
+f.close()
