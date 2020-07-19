@@ -1,32 +1,50 @@
 f = open("grilla.gcode", "w")
 
 
-xAxis = 50
-yAxis = 20
+xStart = 0
+yStart = 0
+xSteps=50
+ySteps=20
 pause= 1
 speed = 50
 
+xTemp=xStart
+yTemp=yStart
+
+xEnd=xStart+xSteps
+yEnd=yStart+ySteps
+
+nFotos=0
+
 def initFile():
     f.write("G21 ; Set units to mm\n")
-    f.write("G91 ; Relative positioning\n")
+    f.write("G90 ; Absolute positioning\n")
 
-def buildFileY():
-    for y in range(0, yAxis-1):
-        f.write("G1 X{} Y{} F{}\n".format(0, 1,speed))
-        f.write("G4 P{}\n".format(pause))
-
-def buildFileX():
-    for x in range(0, xAxis-1):
-        f.write("G1 X{} Y{} F{}\n".format(-1, 0,speed))
-        f.write("G4 P{}\n".format(pause))
+def moveTo(x,y,speed):
+    f.write("G1 X{} Y{} F{}\n".format(x,y,speed))
+    f.write("G4 P{}\n".format(pause))
 
 
 initFile()
-# buildFileY()
-buildFileX()
+while xTemp<xEnd:
+    if yTemp==yStart:
+        while yTemp<yEnd-1:
+            moveTo(xTemp,yTemp,speed)
+            yTemp+=1
+        moveTo(xTemp, yTemp, speed)
+        xTemp+=1
+        while yTemp > yStart:
+            moveTo(xTemp, yTemp, speed)
+            yTemp -= 1
+        moveTo(xTemp, yTemp, speed)
+        xTemp += 1
 
-# f.write("G1 X{} Y{} F{}\n".format(0, -1 * (yAxis - 1),speed))
-# f.write("G1 X{} Y{} F{}\n".format(-1 * (xAxis - 1), 0,speed))
+
+
+
+f.close()
+
 #open and read the file after the appending:
 f = open("grilla.gcode", "r")
 print(f.read())
+f.close()
