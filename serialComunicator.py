@@ -1,46 +1,41 @@
 import serial
 import io
-import time    
+import time
+import timeit
+import sys
 
 
 device = serial.Serial('COM4',115200, timeout=1)
 print(device.name)
-time.sleep(5)
-
-rawString = device.readline()
-print(rawString)
-
-device.write(b'$$')
-out = ''
-        # let's wait one second before reading output (let's give device time to answer)
-time.sleep(1)
-while device.inWaiting() > 0:
-    out +=  ''device.read(1)
-
-if out != '':
-    print(">>" + out)
-
 time.sleep(2)
-rawString = device.readline()
-print(rawString)
-
-# sio = io.TextIOWrapper(io.BufferedRWPair(device, device))
-# sio.write(unicode("$$\n"))
-# sio.flush() # it is buffering. required to get the data out *now*
-# hello = sio.readline()
-# print(hello)
-
-# response = device.write(b'$$')
 
 
+def sendCommand(command, timeout):
+    commandFinished = False
+    start = timeit.default_timer()
+    response = []
+    comand = "{}\n".format(command).encode()
+    device.write("{}\n".format(command).encode())
+    while not commandFinished:
+        data=device.readline()[:-2]
+        if data:
+            print(data.decode("utf-8"))
+            response.append(data.decode("utf-8"))
+            if data.decode("utf-8") == 'ok':
+                return response
+            if data.decode("utf-8") == 'error:2':
+                print('erroooor', comand)
+                return sys.exit()
+        time.sleep(0.001)
+        if timeit.default_timer() - start > timeout:
+            return response
 
-# device.write(b'G21 ; Set units to mm')
-# device.write(b'G91 ; Relative  positioning')
-# device.write(b'G1 X1 Y0 F50')
-# # print(response)
-# time.sleep(5)
-device.close()
-print('end')
+
+
+
+a = sendCommand('$$', timeout=4)
+aa = sendCommand('$X', timeout=4)
+
 
 
 
