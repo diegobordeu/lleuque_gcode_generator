@@ -1,5 +1,4 @@
 import serial
-import io
 import time
 import timeit
 import sys
@@ -11,15 +10,16 @@ time.sleep(2)
 
 
 def sendCommand(command, timeout):
+    #TODO ordenar funcion
     commandFinished = False
     start = timeit.default_timer()
     response = []
     comand = "{}\n".format(command).encode()
-    device.write("{}\n".format(command).encode())
+    device.write(comand)
     while not commandFinished:
         data=device.readline()[:-2]
         if data:
-            print(data.decode("utf-8"))
+            # print(data.decode("utf-8"))
             response.append(data.decode("utf-8"))
             if data.decode("utf-8") == 'ok':
                 return response
@@ -30,11 +30,21 @@ def sendCommand(command, timeout):
         if timeit.default_timer() - start > timeout:
             return response
 
+file=open('grilla.gcode','r')
+# print(file.read())
 
 
+a=sendCommand('$X',timeout=4)
+for line in file.readlines():
+    print(line)
+    a=sendCommand(line[:-1],timeout=4)
+    print(a)
+    time.sleep(1)
 
-a = sendCommand('$$', timeout=4)
-aa = sendCommand('$X', timeout=4)
+
+file.close()
+
+
 
 
 
