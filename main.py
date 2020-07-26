@@ -11,6 +11,7 @@ camera = PiCamara()
 
 def start():
     arduino = Device(port='/dev/tty.usbserial-1410', baud_rate=115200, timeout=1)
+    arduino.connect_device()
     lines = gcode_file.readlines()
     sleep(2)
     camera.start_preview()
@@ -23,7 +24,8 @@ def finish():
     camera.close()
 
 
-def take_pictures(c):
+def take_picture(c, delay):
+    sleep(delay)
     file_path = "./pictures/{}".format(c)
     print(file_path)
     camera.capture(file_path, 'jpeg')
@@ -31,9 +33,14 @@ def take_pictures(c):
 
 def do_lines(lines, arduino):
     counter = 0
+    pic_count = 0
     for line in lines:
+        command = line.strip()
         counter += 1
-        print(line, counter)
+        if command == 'G4 P1':
+            pic_count += 1
+            take_picture(pic_count, 0)
+        # print(line, counter)
         arduino.send_command(line.strip(), timeout=1)
         pass
 

@@ -1,4 +1,4 @@
-f = open("grilla.gcode", "w")
+file = open("grilla.gcode", "w")
 pause = 1
 
 
@@ -29,7 +29,7 @@ def build_file():
             move_to(xTemp, yTemp, speed)
             xTemp += 1
 
-    f.close()
+    file.close()
     # open and read the file after the appending:
     f = open("grilla.gcode", "r")
     print(f.read())
@@ -37,15 +37,15 @@ def build_file():
 
 
 def init_file():
-    f.write("G21 ; Set units to mm\n")
-    f.write("G90 ; Absolute positioning\n")
+    file.write("G21 ; Set units to mm\n")
+    file.write("G90 ; Absolute positioning\n")
 
 
 def move_to(x,y,speed):
-    f.write("G90 G1 X{} Y{} F{}\n".format(x,y,speed))
-    f.write("G4 P{}\n".format(pause))
+    file.write("G90 G1 X{} Y{} F{}\n".format(x,y,speed))
+    file.write("G4 P{}\n".format(pause))
 
-
+build_file()
 
 
 
