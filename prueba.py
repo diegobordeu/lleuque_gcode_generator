@@ -3,21 +3,20 @@ import time
 import timeit
 import sys
 
-
-device = serial.Serial('/dev/tty.usbserial-1410',115200, timeout=1)
+device = serial.Serial('/dev/tty.usbserial-1410', 115200, timeout=1)
 print(device.name)
 time.sleep(2)
 
 
 def sendCommand(command, timeout):
-    #TODO ordenar funcion
+    # TODO ordenar funcion
     commandFinished = False
     start = timeit.default_timer()
     response = []
     comand = "{}\n".format(command).encode()
     device.write(comand)
     while not commandFinished:
-        data=device.readline()[:-2]
+        data = device.readline()[:-2]
         if data:
             # print(data.decode("utf-8"))
             response.append(data.decode("utf-8"))
@@ -30,22 +29,16 @@ def sendCommand(command, timeout):
         if timeit.default_timer() - start > timeout:
             return response
 
-file=open('grilla.gcode','r')
+
+file = open('grilla.gcode', 'r')
 # print(file.read())
 
 
-a=sendCommand('$X',timeout=4)
+a = sendCommand('$X', timeout=4)
 for line in file.readlines():
     print(line)
-    a=sendCommand(line[:-1],timeout=4)
+    a = sendCommand(line[:-1], timeout=4)
     print(a)
     time.sleep(1)
 
-
 file.close()
-
-
-
-
-
-

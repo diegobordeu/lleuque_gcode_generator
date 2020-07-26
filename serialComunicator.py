@@ -1,11 +1,9 @@
 import serial
-import io
 import time
 import timeit
 import sys
 
-
-device = serial.Serial('/dev/tty.usbserial-1410',115200, timeout=1)
+device = serial.Serial('/dev/tty.usbserial-1410', 115200, timeout=1)
 print(device.name)
 time.sleep(2)
 
@@ -17,7 +15,7 @@ def sendCommand(command, timeout):
     comand = "{}\n".format(command).encode()
     device.write("{}\n".format(command).encode())
     while not commandFinished:
-        data=device.readline()[:-2]
+        data = device.readline()[:-2]
         if data:
             print(data.decode("utf-8"))
             response.append(data.decode("utf-8"))
@@ -31,11 +29,5 @@ def sendCommand(command, timeout):
             return response
 
 
-
-
 a = sendCommand('$$', timeout=4)
 aa = sendCommand('$X', timeout=4)
-
-
-
-
