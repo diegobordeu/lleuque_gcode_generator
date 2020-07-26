@@ -4,62 +4,35 @@ import timeit
 import sys
 
 
-device = serial.Serial('/dev/tty.usbserial-1410', 115200, timeout=1)
-class device():
+class Device:
 
-    def __init__(self, port, bandrate, timeout):
+    def __init__(self, port, baud_rate, timeout):
         self.port = port
-        self.bandrate = bandrate
+        self.baud_rate = baud_rate
         self.timeout = timeout
 
     def connect_device(self):
         self.device = serial.Serial(self.port, self.bandrate, self.timeout)
 
-    def sendCommand(self, command, timeout):
+    def send_command(self, command, timeout):
         commandFinished = False
         start = timeit.default_timer()
         response = []
-        comand = "{}\n".format(command).encode()
-        device.write(comand)
+        command = "{}\n".format(command).encode()
+        self.device.write(command)
         while not commandFinished:
-            data = device.readline()[:-2]
+            data = self.device.readline()[:-2]
             if data:
-                print(data.decode("utf-8"))
-                response.append(data.decode("utf-8"))
-                if data.decode("utf-8") == 'ok':
+                decoded = data.decode("utf-8")
+                response.append(decoded)
+                if decoded == 'ok':
                     return response
-                if data.decode("utf-8") == 'error:2':
-                    print('erroooor', comand)
+                if decoded == 'error:2':
+                    print('erroooor', command)
                     return sys.exit()
             time.sleep(0.001)
             if timeit.default_timer() - start > timeout:
                 return response
 
-
-print(device.name)
-time.sleep(2)
-
-
-def sendCommand(command, timeout):
-    commandFinished = False
-    start = timeit.default_timer()
-    response = []
-    comand = "{}\n".format(command).encode()
-    device.write("{}\n".format(command).encode())
-    while not commandFinished:
-        data = device.readline()[:-2]
-        if data:
-            print(data.decode("utf-8"))
-            response.append(data.decode("utf-8"))
-            if data.decode("utf-8") == 'ok':
-                return response
-            if data.decode("utf-8") == 'error:2':
-                print('erroooor', comand)
-                return sys.exit()
-        time.sleep(0.001)
-        if timeit.default_timer() - start > timeout:
-            return response
-
-
-a = sendCommand('$$', timeout=4)
-aa = sendCommand('$X', timeout=4)
+# a = sendCommand('$$', timeout=4)
+# aa = sendCommand('$X', timeout=4)
