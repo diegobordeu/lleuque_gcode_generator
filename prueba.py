@@ -2,6 +2,7 @@ import serial
 import time
 import timeit
 import sys
+import
 
 
 device = serial.Serial('/dev/tty.usbserial-1410',115200, timeout=1)
