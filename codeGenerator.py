@@ -45,8 +45,6 @@ def move_to(x,y,speed):
     file.write("G90 G1 X{} Y{} F{}\n".format(x,y,speed))
     file.write("G4 P{}\n".format(pause))
 
-build_file()
-
 
 
 
