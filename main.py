@@ -16,6 +16,7 @@ def start():
     sleep(2)
     arduino.send_command('$X',timeout=4)
     camera.start_preview()
+    sleep(10)
     do_lines(lines, arduino)
 
 
