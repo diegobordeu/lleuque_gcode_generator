@@ -2,9 +2,14 @@ import serial
 import time
 import timeit
 import sys
+from picamera import PiCamera
+from time import sleep
+
+camara = PiCamera()
 
 
-device = serial.Serial('/dev/tty.usbserial-1410',115200, timeout=1)
+
+device = serial.Serial('/dev/ttyUSB1',115200, timeout=1)
 print(device.name)
 time.sleep(2)
 
@@ -35,7 +40,17 @@ file=open('grilla.gcode','r')
 
 
 a=sendCommand('$X',timeout=4)
+c=0
+
+camara.start_preview()
+
+
+
 for line in file.readlines():
+    if line.strip() == 'G4 P1':
+        c +=1
+        b=camara.capture("./pictures/{}".format(c), 'jpeg')
+        print("./pictures/{}".format(c))
     print(line)
     a=sendCommand(line[:-1],timeout=4)
     print(a)
@@ -43,7 +58,8 @@ for line in file.readlines():
 
 
 file.close()
-
+camara.stop_preview()
+camara.close()
 
 
 
