@@ -6,13 +6,12 @@ import sys
 
 class Device:
 
-    def __init__(self, port, baud_rate, timeout):
+    def __init__(self, port, baud_rate):
         self.port = port
         self.baud_rate = baud_rate
-        self.timeout = timeout
 
     def connect_device(self):
-        self.device = serial.Serial(self.port, self.bandrate, self.timeout)
+        self.device = serial.Serial(self.port, self.baud_rate, timeout=1)
 
     def send_command(self, command, timeout):
         commandFinished = False
