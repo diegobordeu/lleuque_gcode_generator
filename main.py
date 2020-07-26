@@ -1,7 +1,7 @@
 from serialComunicator import Device
 import codeGenerator
 from time import sleep
-from picamera import PiCamara
+from picamera import PiCamera
 
 codeGenerator.build_file()
 gcode_file = open("grilla.gcode", "r")
