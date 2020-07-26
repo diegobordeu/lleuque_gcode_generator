@@ -12,6 +12,7 @@ camera = PiCamara()
 def start():
     arduino = Device(port='/dev/tty.usbserial-1410', baud_rate=115200, timeout=1)
     arduino.connect_device()
+    arduino.send_command('$X',timeout=4)
     lines = gcode_file.readlines()
     sleep(2)
     camera.start_preview()
