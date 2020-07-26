@@ -15,13 +15,13 @@ def start():
     lines = gcode_file.readlines()
     sleep(2)
     arduino.send_command('$X',timeout=4)
-#     camera.start_preview()
+    camera.start_preview()
     do_lines(lines, arduino)
 
 
 def finish():
     gcode_file.close()
-#     camera.stop_preview()
+    camera.stop_preview()
     camera.close()
 
 
@@ -41,7 +41,7 @@ def do_lines(lines, arduino):
         counter += 1
         if command == 'G4 P1':
             pic_count += 1
-            take_picture(pic_count, 0)
+            take_picture(pic_count, 3)
         # print(line, counter)
         response = arduino.send_command(line.strip(), timeout=1)
         print(response)
