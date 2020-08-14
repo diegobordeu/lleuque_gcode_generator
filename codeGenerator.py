@@ -5,8 +5,8 @@ pause = 1
 def build_file():
     xStart = 1
     yStart = 1
-    xSteps = 3
-    ySteps = 3
+    xSteps = 5
+    ySteps = 4
     speed = 50
 
     xTemp = xStart
@@ -18,7 +18,7 @@ def build_file():
     nFotos = 0
     while xTemp < xEnd:
         if yTemp == yStart:
-            while yTemp < yEnd - 1:
+            while yTemp < yEnd:
                 move_to(xTemp, yTemp, speed)
                 yTemp += 1
             move_to(xTemp, yTemp, speed)
@@ -28,7 +28,7 @@ def build_file():
                 yTemp -= 1
             move_to(xTemp, yTemp, speed)
             xTemp += 1
-
+    file.write("G90 G1 X{} Y{} F{}\n".format(xStart,yStart,speed))
     file.close()
     # open and read the file after the appending:
     f = open("grilla.gcode", "r")
