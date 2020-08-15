@@ -39,3 +39,10 @@ class GCode(object):
                     y_temp -= 1
                 self.move_to(x_temp, y_temp, self.speed)
                 x_temp += 1
+        self.file.close()
+
+    def get_gcode(self):
+        f = open("grilla.gcode", "r")
+        content = f.readlines()
+        f.close()
+        return content
