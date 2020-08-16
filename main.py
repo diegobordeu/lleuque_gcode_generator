@@ -1,7 +1,7 @@
 from serialComunicator import Device
 from gcode import GCode
 from time import sleep
-# from picamera import PiCamera
+from picamera import PiCamera
 
 gcode = GCode()
 gcode.init_file()
