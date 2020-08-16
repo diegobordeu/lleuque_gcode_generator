@@ -3,7 +3,7 @@ from gcode import GCode
 from time import sleep
 from picamera import PiCamera
 
-gcode = GCode()
+gcode = GCode(2,2)
 gcode.init_file()
 gcode.build_file()
 
