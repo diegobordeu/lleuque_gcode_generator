@@ -13,7 +13,11 @@ class Device:
     def connect_device(self):
         self.device = serial.Serial(self.port, self.baud_rate, timeout=1)
 
-    def send_command(self, command, timeout):
+    def send_command(self, command, timeout, is_setup=False):
+        if is_setup:
+            time.sleep(0.2)
+        else:
+            time.sleep(1)
         commandFinished = False
         start = timeit.default_timer()
         response = []
@@ -37,7 +41,7 @@ class Device:
         f = open("grlb.conf", "r")
         content = f.readlines()
         for line in content:
-            self.send_command(line, timeout=1)
+            self.send_command(line, timeout=1, is_setup=True)
             print(f"initial setup ---->{line}")
         f.close()
 
