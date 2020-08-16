@@ -33,5 +33,11 @@ class Device:
             if timeit.default_timer() - start > timeout:
                 return response
 
-# a = sendCommand('$$', timeout=4)
-# aa = sendCommand('$X', timeout=4)
+    def load_grlb_config(self):
+        f = open("grlb.confg", "r")
+        content = f.readlines()
+        for line in content:
+            self.send_command(line, timeout=1)
+            print(f"initial setup ---->{line}")
+        f.close()
+

@@ -13,11 +13,13 @@ camera = PiCamera()
 def start():
     arduino = Device(port='/dev/ttyUSB0', baud_rate=115200)
     arduino.connect_device()
-    lines = gcode.get_gcode()
     sleep(2)
     arduino.send_command('$X',timeout=4)
+    sleep(2)
+    arduino.load_grlb_config()
     camera.start_preview()
-    sleep(5)
+    sleep(2)
+    lines = gcode.get_gcode()
     do_gcode_lines(lines, arduino)
 
 

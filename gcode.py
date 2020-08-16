@@ -1,7 +1,3 @@
-
-
-
-
 class GCode(object):
     
 
