@@ -34,7 +34,7 @@ class Device:
                 return response
 
     def load_grlb_config(self):
-        f = open("grlb.confg", "r")
+        f = open("grlb.conf", "r")
         content = f.readlines()
         for line in content:
             self.send_command(line, timeout=1)
