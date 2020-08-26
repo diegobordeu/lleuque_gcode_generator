@@ -169,7 +169,7 @@ class SnapHelper:
 
     if not oneshot:
       self.pipe_r, self.pipe_w = os.pipe()
-      self.thread = threading.Thread(target=self.read_keyboard)
+      self.thread = threading.Thread(target=self.take_one_pic)
       self.thread.daemon = True
 
   def get_filename(self):
