@@ -196,6 +196,7 @@ class SnapHelper:
         if self.count == 0:
           self.snap_it = True
           self.count += 1
+          break
 
 
   def read_keyboard(self):
