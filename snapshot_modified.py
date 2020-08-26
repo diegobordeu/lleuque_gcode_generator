@@ -165,11 +165,12 @@ class SnapHelper:
     self.scrapframes = SCRAP_FRAMES
     self.sysfs = sysfs
     self.loop = None
-    self.count = 0
+    self.foto_ordered = False
+    self.foto_taken = False
 
     if not oneshot:
       self.pipe_r, self.pipe_w = os.pipe()
-      self.thread = threading.Thread(target=self.take_one_pic)
+      self.thread = threading.Thread(target=self.read_keyboard)
       self.thread.daemon = True
 
   def get_filename(self):
@@ -181,24 +182,6 @@ class SnapHelper:
 
     return filename
 
-  def take_one_pic(self):
-    print('going to take only 1 picture')
-    while True:
-        read_fd, _, _ = select.select([sys.stdin, self.pipe_r], [], [])
-        if self.pipe_r in read_fd:
-          break
-        c = sys.stdin.read()
-        if self.count == 1:
-          while not self.loop.is_running():
-            time.sleep(0.01)
-          self.loop.quit()
-          break
-        if self.count == 0:
-          self.snap_it = True
-          self.count += 1
-          break
-
-
   def read_keyboard(self):
     print('Press space to take a snap, r to refocus, or q to quit')
     with setup_keyboard():
@@ -207,11 +190,12 @@ class SnapHelper:
         if self.pipe_r in read_fd:
           break
         c = sys.stdin.read()
-        if c == ' ':
+        if not self.foto_ordered:
           self.snap_it = True
+          self.foto_ordered = True
         if c == 'r':
           self.refocus()
-        if c == 'q':
+        if self.foto_taken:
           while not self.loop.is_running():
             time.sleep(0.01)
           self.loop.quit()
@@ -252,6 +236,7 @@ class SnapHelper:
     if self.snap_it:
       self.check_af()
       self.snap_it = False
+      self.foto_taken = True
       retval = True
     else:
       retval = False
