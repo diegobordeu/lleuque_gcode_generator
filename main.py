@@ -5,6 +5,10 @@ import subprocess
 import datetime
 import os
 
+
+now_date=datetime.date.today() 
+now_hour=datetime.datetime.now().hour
+
 # from picamera import PiCamera
 
 gcode = GCode(2,2)
@@ -14,10 +18,8 @@ gcode.build_file()
 # camera = PiCamera()
 
 def take_picture_v2():
-    date=datetime.date.today() 
-    hour=datetime.datetime.now().hour
-    subprocess.run(['mkdir','-p',f'./image_storage/{date}/{hour}'])
-    os.chdir(f'./image_storage/{date}/{hour}/')
+    subprocess.run(['mkdir','-p',f'./image_storage/{now_date}/{now_hour}'])
+    os.chdir(f'./image_storage/{now_date}/{now_hour}/')
     subprocess.run(['python3','../../../snapshot.py','--oneshot'])
 
  
@@ -30,23 +32,19 @@ def start():
     sleep(2)
     arduino.load_grlb_config()
     sleep(5)
-  #  camera.start_preview()
     lines = gcode.get_gcode()
     do_gcode_lines(lines, arduino)
 
 
 def finish():
     print("finish")
-    # camera.stop_preview()
-    # camera.close()
 
 
 def take_picture(c, delay):
     sleep(delay)
     file_path = f"./pictures/{c}"
     print(file_path)
-    
-   # camera.capture(file_path, 'jpeg')
+    # camera.capture(file_path, 'jpeg')
 
 
 def do_gcode_lines(lines, arduino):
@@ -62,7 +60,7 @@ def do_gcode_lines(lines, arduino):
         # print(response)
         pass
 
-#start()
+start()
 take_picture_v2()
 finish()
 
