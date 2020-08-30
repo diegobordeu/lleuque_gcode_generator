@@ -165,8 +165,9 @@ class SnapHelper:
     self.scrapframes = SCRAP_FRAMES
     self.sysfs = sysfs
     self.loop = None
-
-    if not oneshot:
+    print(self.oneshot)
+    
+    if oneshot:
       self.pipe_r, self.pipe_w = os.pipe()
       self.thread = threading.Thread(target=self.read_keyboard)
       self.thread.daemon = True
@@ -282,7 +283,7 @@ def main(arguments):
       snap.exit_keyboard_thread()
   except Exception as ex:
     print(ex)
-
+    raise(ex)
 
 if __name__ == '__main__':
   main(sys.argv)
