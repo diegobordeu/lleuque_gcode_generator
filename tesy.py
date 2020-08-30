@@ -1,15 +1,14 @@
 import subprocess
 import datetime
 import sys
+import time
+import os
 
-print(sys.argv)
 day = sys.argv[2]
 hour = sys.argv[4]
 
-x = datetime.datetime.now()
-print(x)
-
-subprocess.run("mkdir", "-p", f"./image_storage/{day}/{hour}")
-subprocess.run("cd", f"./image_storage/{day}/{hour}")
-subprocess.run(['python3','../../snapshot.py','--oneshot'])
+subprocess.run(["mkdir", "-p", f"./image_storage/{day}/{hour}"])
+os.chdir(f"./image_storage/{day}/{hour}/")
+# subprocess.run("ls")
+subprocess.run(['python3','../../../snapshot.py','--oneshot'])
 
