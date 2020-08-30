@@ -23,6 +23,7 @@ class GCode(object):
         y_end = self.y_start + self.y_steps
         x_temp = self.x_start
         y_temp = self.y_start
+        self.file.write(f"G4 P{self.pause}\n") # initial picture
         while x_temp < x_end:
             if y_temp == self.y_start:
                 while y_temp < y_end:

@@ -34,7 +34,7 @@ def start():
     arduino.send_command('$X',timeout=4)
     sleep(2)
     arduino.load_grlb_config()
-    sleep(5)
+    sleep(1)
     lines = gcode.get_gcode()
     do_gcode_lines(lines, arduino)
 
