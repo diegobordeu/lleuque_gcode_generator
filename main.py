@@ -5,9 +5,11 @@ import subprocess
 import datetime
 import os
 
-
-now_date=datetime.date.today() 
-now_hour=datetime.datetime.now().hour
+now=datetime.datetime.now()
+now_date=now.split(" ")[0]
+now_hour=now.split(" ")[1]
+print(now_date, now_hour)
+# now_hour=datetime.datetime.now().hour
 
 # from picamera import PiCamera
 
@@ -18,9 +20,10 @@ gcode.build_file()
 # camera = PiCamera()
 
 def take_picture_v2():
-    subprocess.run(['mkdir','-p',f'./image_storage/{now_date}/{now_hour}'])
-    os.chdir(f'./image_storage/{now_date}/{now_hour}/')
-    subprocess.run(['python3','../../../snapshot.py','--oneshot'])
+    subprocess.run(['python3','./image_taker.py', '-d', now_date, '-h', now_hour])
+    # subprocess.run(['mkdir','-p',f'./image_storage/{now_date}/{now_hour}'])
+    # os.chdir(f'./image_storage/{now_date}/{now_hour}/')
+    # subprocess.run(['python3','../../../snapshot.py','--oneshot'])
 
  
 
