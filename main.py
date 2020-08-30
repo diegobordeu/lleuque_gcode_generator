@@ -5,7 +5,7 @@ import subprocess
 import datetime
 import os
 
-now=datetime.datetime.now()
+now=str(datetime.datetime.now())
 now_date=now.split(" ")[0]
 now_hour=now.split(" ")[1]
 print(now_date, now_hour)
