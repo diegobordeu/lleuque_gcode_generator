@@ -1,6 +1,10 @@
 from serialComunicator import Device
 from gcode import GCode
 from time import sleep
+import subprocess
+import datetime
+import os
+
 # from picamera import PiCamera
 
 gcode = GCode(2,2)
@@ -8,6 +12,15 @@ gcode.init_file()
 gcode.build_file()
 
 # camera = PiCamera()
+
+def take_picture_v2():
+    date=datetime.date.today() 
+    hour=datetime.datetime.now().hour
+    subprocess.run(['mkdir','-p',f'./image_storage/{date}/{hour}'])
+    os.chdir(f'./image_storage/{date}/{hour}/')
+    subprocess.run(['python3','../../../snapshot.py','--oneshot'])
+
+ 
 
 def start():
     arduino = Device(port='/dev/ttyACM0', baud_rate=115200)
@@ -32,6 +45,7 @@ def take_picture(c, delay):
     sleep(delay)
     file_path = f"./pictures/{c}"
     print(file_path)
+    
    # camera.capture(file_path, 'jpeg')
 
 
@@ -43,12 +57,13 @@ def do_gcode_lines(lines, arduino):
         counter += 1
         if command == 'G4 P1':
             pic_count += 1
-            take_picture(pic_count, 1)
+            take_picture_v2()
         response = arduino.send_command(line.strip(), timeout=1)
         # print(response)
         pass
 
-start()
+#start()
+take_picture_v2()
 finish()
 
 
