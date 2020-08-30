@@ -182,7 +182,7 @@ class SnapHelper:
     return filename
 
   def read_keyboard(self):
-    print('Press space to take a snap, r to refocus, or q to quit')
+    # print('Press space to take a snap, r to refocus, or q to quit')
     with setup_keyboard():
       while True:
         read_fd, _, _ = select.select([sys.stdin, self.pipe_r], [], [])
