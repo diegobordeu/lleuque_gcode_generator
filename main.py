@@ -8,7 +8,7 @@ import os
 now=str(datetime.datetime.now())
 now_date=now.split(" ")[0]
 now_hour=now.split(" ")[1]
-print(now_date, now_hour)
+print(f"Images of this session will be saved in de directory ./{now_date}/{now_hour}")
 # now_hour=datetime.datetime.now().hour
 
 # from picamera import PiCamera
@@ -21,9 +21,6 @@ gcode.build_file()
 
 def take_picture_v2():
     subprocess.run(['python3','./image_taker.py', '-d', now_date, '-h', now_hour])
-    # subprocess.run(['mkdir','-p',f'./image_storage/{now_date}/{now_hour}'])
-    # os.chdir(f'./image_storage/{now_date}/{now_hour}/')
-    # subprocess.run(['python3','../../../snapshot.py','--oneshot'])
 
  
 
