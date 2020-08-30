@@ -61,7 +61,7 @@ def do_gcode_lines(lines, arduino):
         pass
 
 start()
-take_picture_v2()
+# take_picture_v2()
 finish()
 
 
