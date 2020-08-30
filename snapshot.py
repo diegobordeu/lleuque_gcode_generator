@@ -165,7 +165,6 @@ class SnapHelper:
     self.scrapframes = SCRAP_FRAMES
     self.sysfs = sysfs
     self.loop = None
-    print(self.oneshot)
     
     if oneshot:
       self.pipe_r, self.pipe_w = os.pipe()
