@@ -7,8 +7,8 @@ class GCode(object):
         self.pause = pause
         self.speed = speed
         self.file = open("grilla.gcode", "w")
-        self.x_start = 1
-        self.y_start = 1
+        self.x_start = 0
+        self.y_start = 0
 
     def move_to(self, x, y, speed):
         self.file.write(f"G90 G1 X{x} Y{y} F{speed}\n")
