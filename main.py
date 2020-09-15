@@ -13,7 +13,7 @@ print(f"Images of this session will be saved in de directory ./{now_date}/{now_h
 
 # from picamera import PiCamera
 
-gcode = GCode(2,2)
+gcode = GCode(2,19)
 gcode.init_file()
 gcode.build_file()
 
